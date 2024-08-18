@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz App</title>
+    <style>
+        *{box-sizing: border-box;}
+        body{font-family:"poppins",sans-serif;background-color: cadetblue;display: flex;align-items: center;justify-content: center;min-height: 100vh;}
+        .quiz-container{background-color: white;border-radius: 50px;box-shadow: 0 0 10px 5px rgba(0,0,0,0.1);width: 600px;color: blue;}
+        .quiz-header{padding: 4rem;}
+        ul{list-style-type:none;padding: 0px;}
+        h2{margin: 0;}
+        ul li{font-size: 1.1rem;margin: 1rem 0;}
+        ul li label{cursor: pointer;}
+        button{
+            background-color: purple;border: none;color: white;display: block;font-family: inherit;width: 100%;font-size: 2rem;padding: 2rem;
+        }
+        button:hover{background-color: blue;cursor: pointer;transition: 2s;}
+        button:focus{background-color: crimson;}
+    </style>
+</head>
+<body>
+        <div class="quiz-container" id="quiz">
+            <div class="quiz-header">
+            <h2 id="question">Question Test</h2>
+            <ul>
+                <li>
+                    <input type="radio" id="a" name="answer" class="answer">
+                    <label for="a" id="a_text">Question</label>
+                </li>
+                <li>
+                    <input type="radio" id="b" name="answer" class="answer">
+                    <label for="b" id="b_text">Question</label>
+                </li>
+                <li>
+                    <input type="radio" id="c" name="answer" class="answer">
+                    <label for="c" id="c_text">Question</label>
+                </li>
+            </ul>
+        </div>
+            <button id="submit">Submit</button>
+            
+        </div>
+    
+    <script>
+        const quizData=[
+            {
+                question: "Which is object based programming language?",
+                a: "c++",
+                b: "java",
+                c:"java-script",
+                
+                correct:"c",
+            },
+            {
+                question: "Which is purely object oriented programming language?",
+                a: "c++",
+                b: "java",
+                c:"java-script",
+                
+                correct:"b",
+
+            },
+            {
+                question: "Which is/are programming language/s?",
+                a: "c++",
+                b: "java",
+                c:"both a and b",
+                
+                correct:"c",
+
+            }
+
+        ];
+        const quiz=document.getElementById("quiz");
+        const answerEls=document.querySelectorAll(".answer");
+        const questionE1=document.getElementById("question");
+        const a_text=document.getElementById("a_text");
+        const b_text=document.getElementById("b_text");
+        const c_text=document.getElementById("c_text");
+        const submitBtn=document.getElementById("submit");
+        let currentQuiz=0;
+        let answer=undefined;
+        let score=0;
+        loadQuiz();
+        function loadQuiz(){
+            deselectAnswers();
+            const currentQuizData=quizData[currentQuiz];
+            questionE1.innerText=currentQuizData.question;
+            a_text.innerText=currentQuizData.a;
+            b_text.innerText=currentQuizData.b;
+            c_text.innerText=currentQuizData.c;
+            }
+        submitBtn.addEventListener('click',()=>{
+            
+            const answer=getSelected();
+            
+
+            if(answer){
+            if(answer===quizData[currentQuiz].correct){
+                score++;
+            }
+            currentQuiz++;
+            if(currentQuiz<quizData.length){
+                loadQuiz();
+            }else{
+               quiz.innerHTML=`<h2><center>you answer correct ${score}outof${quizData.length}questions</h2>`;
+            }
+            }
+            
+        });
+        function getSelected(){
+            let answer=undefined;
+            answerEls.forEach((answerE1)=>{
+                if(answerE1.checked){
+                   answer=answerE1.id;
+
+                }
+            });
+            return answer;
+        }
+        function deselectAnswers(){
+            answerEls.forEach((answerE1)=>{
+                answerE1.checked=false;
+            });
+        }
+
+
+
+
+
+    </script>
+</body>
+</html>
